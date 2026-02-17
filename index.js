@@ -204,6 +204,25 @@ client.once('ready', () => {
 });
 
 client.on('interactionCreate', async interaction => {
+
+  // 🔥 SLASH COMMANDS (COLOCA AQUI)
+  if (interaction.isChatInputCommand()) {
+
+    if (interaction.commandName === 'configurar') {
+      return interaction.reply({
+        content: 'Abrindo configurações...',
+        ephemeral: true
+      });
+    }
+
+    if (interaction.commandName === 'criar_ticket') {
+      return interaction.reply({
+        content: 'Criando ticket...',
+        ephemeral: true
+      });
+    }
+
+  }
     // Seleção de categoria
     if (interaction.isStringSelectMenu() && interaction.customId === 'select_category') {
         const category = interaction.values[0];
