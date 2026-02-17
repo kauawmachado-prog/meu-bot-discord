@@ -560,7 +560,10 @@ client.on('interactionCreate', async (interaction) => {
   }
 });
 
+console.log("TOKEN carregado?", !!process.env.TOKEN);
+
 client.login(process.env.TOKEN);
+
 
 
 
