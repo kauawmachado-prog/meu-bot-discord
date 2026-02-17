@@ -34,15 +34,6 @@ client.once('clientReady', async () => {
 
    const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
 
-   try {
-      await rest.put(
-         Routes.applicationGuildCommands('1473135725900988589', '1471240969830797432'),
-         { body: commands }
-      );
-      console.log('✅ Comandos registrados!');
-   } catch (err) {
-      console.error(err);
-   }
 // Configurações
 const CATEGORIES = {
 
