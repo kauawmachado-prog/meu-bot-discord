@@ -11,7 +11,7 @@ const client = new Client({
     GatewayIntentBits.DirectMessages
   ]
 });
-client.once('ready', () => {
+client.once('clientReady', async () => {
   console.log(`🔥 Bot online como ${client.user.tag}`);
 
   client.user.setPresence({
@@ -19,6 +19,30 @@ client.once('ready', () => {
     status: 'online'
   });
 });  
+  // 👇 ADICIONA ISSO AQUI
+   const { REST, Routes, SlashCommandBuilder } = require('discord.js');
+
+   const commands = [
+      new SlashCommandBuilder()
+         .setName('configurar')
+         .setDescription('Abre o hub de configurações'),
+
+      new SlashCommandBuilder()
+         .setName('criar_ticket')
+         .setDescription('Cria um ticket'),
+   ].map(cmd => cmd.toJSON());
+
+   const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
+
+   try {
+      await rest.put(
+         Routes.applicationGuildCommands('1473135725900988589', '1471240969830797432'),
+         { body: commands }
+      );
+      console.log('✅ Comandos registrados!');
+   } catch (err) {
+      console.error(err);
+   }
 // Configurações
 const CATEGORIES = {
 
@@ -507,8 +531,27 @@ client.on('messageCreate', async message => {
         await message.delete();
     }
 });
+// 🔥 SLASH COMMANDS
+client.on('interactionCreate', async (interaction) => {
+  if (!interaction.isChatInputCommand()) return;
+
+  if (interaction.commandName === 'configurar') {
+    return interaction.reply({
+      content: 'Abrindo configurações...',
+      ephemeral: true
+    });
+  }
+
+  if (interaction.commandName === 'criar_ticket') {
+    return interaction.reply({
+      content: 'Criando ticket...',
+      ephemeral: true
+    });
+  }
+});
 
 client.login(process.env.TOKEN);
+
 
 
 
